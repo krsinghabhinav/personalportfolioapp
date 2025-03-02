@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controller/EmailController.dart';
 import '../../controller/LinkedInController.dart';
-import '../../controller/PhoneController.dart';
 import '../../controller/ResumeController.dart';
-import '../../controller/githubhController.dart';
 import 'widgets/abouttext.dart';
 import 'widgets/cardProfile.dart';
 import 'widgets/emailButtonContainer.dart';
@@ -77,26 +75,7 @@ class _HomescreenState extends State<Homescreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
-              // Center(
-              //   child: Container(
-              //     height: Get.height * 0.045,
-              //     width: Get.width * 0.58,
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(10),
-              //       color: const Color.fromARGB(246, 218, 73, 37),
-              //     ),
-              //     alignment: Alignment.center,
-              //     child: const Text(
-              //       "Flutter Developer",
-              //       style: TextStyle(
-              //           fontSize: 24,
-              //           fontWeight: FontWeight.bold,
-              //           color: Colors.white),
-              //     ),
-              //   ),
-              // ),
-
-              cardProfile(),
+              CardProfile(),
               const SizedBox(height: 10),
               Abouttext(),
               const SizedBox(height: 10),

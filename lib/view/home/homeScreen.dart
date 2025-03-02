@@ -3,11 +3,15 @@ import 'package:get/get.dart';
 import '../../controller/EmailController.dart';
 import '../../controller/LinkedInController.dart';
 import '../../controller/PhoneController.dart';
+import '../../controller/ResumeController.dart';
 import '../../controller/githubhController.dart';
+import 'widgets/abouttext.dart';
 import 'widgets/cardProfile.dart';
 import 'widgets/emailButtonContainer.dart';
 import 'widgets/githubhButtonContainer.dart';
+import 'widgets/linkedInButtonContainer.dart';
 import 'widgets/phoneButtonContainer.dart';
+import 'widgets/resumeButtonContainer.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -27,113 +31,95 @@ class _HomescreenState extends State<Homescreen>
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 700),
-    )..repeat(reverse: true); // Continuous blinking effect
+    )..repeat(reverse: true);
 
     _opacityAnimation =
         Tween<double>(begin: 1.0, end: 0.3).animate(_animationController);
   }
+
+  final ResumeController resumeController = Get.put(ResumeController());
 
   @override
   void dispose() {
     _animationController.dispose();
     super.dispose();
   }
-final LinkedInController linkedinController = Get.put(LinkedInController());
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 30, 22, 51),
-        body: Center(
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              Container(
-                height: Get.height * 0.045,
-                width: Get.width * 0.58,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color.fromARGB(246, 218, 73, 37),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  "Flutter Developer",
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 255, 255, 255)),
-                ),
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 30, 22, 51),
+          title: Center(
+            child: Container(
+              height: Get.height * 0.05,
+              width: Get.width * 0.58,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(246, 218, 73, 37),
               ),
-              SizedBox(height: 5),
+              alignment: Alignment.center,
+              child: const Text(
+                "Flutter Developer",
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+          ),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              // Center(
+              //   child: Container(
+              //     height: Get.height * 0.045,
+              //     width: Get.width * 0.58,
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(10),
+              //       color: const Color.fromARGB(246, 218, 73, 37),
+              //     ),
+              //     alignment: Alignment.center,
+              //     child: const Text(
+              //       "Flutter Developer",
+              //       style: TextStyle(
+              //           fontSize: 24,
+              //           fontWeight: FontWeight.bold,
+              //           color: Colors.white),
+              //     ),
+              //   ),
+              // ),
+
               cardProfile(),
               const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    emailButtonContainer(opacityAnimation: _opacityAnimation),
-                    const SizedBox(width: 25),
-                    githubhButtonContainer(
-                      opacityAnimation: _opacityAnimation,
-                    ),
-                  ],
-                ),
+              Abouttext(),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  emailButtonContainer(opacityAnimation: _opacityAnimation),
+                  githubhButtonContainer(opacityAnimation: _opacityAnimation),
+                ],
               ),
-              SizedBox(height: 25),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    phoneButtonContainer(
-                      opacityAnimation: _opacityAnimation,
-                    ),
-                    const SizedBox(width: 25),
-                    AnimatedBuilder(
-                      animation: _opacityAnimation,
-                      builder: (context, child) {
-                        return Opacity(
-                          opacity: _opacityAnimation.value,
-                          child: GestureDetector(
-                            onTap: () {
-                              linkedinController.openLinkedIn();
-                            },
-                            child: Container(
-                              height: Get.height * 0.06,
-                              width: Get.width * 0.4,
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 57, 128, 124),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const ImageIcon(
-                                    AssetImage(
-                                        "assets/images/LinkedIn Circled.png"),
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                  const SizedBox(width: 10),
-                                  const Text(
-                                    "LinkedIn",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              )
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  phoneButtonContainer(opacityAnimation: _opacityAnimation),
+                  linkedInButtonContainer(opacityAnimation: _opacityAnimation),
+                ],
+              ),
+              const SizedBox(height: 20),
+              resumeButtonContainer(
+                opacityAnimation: _opacityAnimation,
+              ),
+              const SizedBox(height: 10),
             ],
           ),
         ),
